@@ -2,18 +2,41 @@ from ursina import *
 
 app = Ursina()
 
-player = Entity(model='cube', color=color.orange, scale_y=1)
+class Wall(Entity):
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.model='quad'
+        self.color = color.blue
+        self.collider = 'box'
+        self.x = 3
 
-def update():   # update gets automatically called.
-    if(held_keys['j']!=0):
-        sprint = 2
-    else:
-        sprint = 1
-    player.x += held_keys['d'] * .1 * sprint
-    player.x -= held_keys['a'] * .1 * sprint
-    player.y += held_keys['w'] * .1 * sprint
-    player.y -= held_keys['s'] * .1 * sprint
-    player.z += held_keys['q'] * .1 * sprint
-    player.z -= held_keys['e'] * .1 * sprint
-		
+class Player(Entity):
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.model='quad'
+        self.color = color.red
+        self.collider = 'box'
+
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
+    def input(self, key):
+        '''
+        if key == 'space':
+            self.animate_y(2, duration=2, curve=curve.out_sine)
+            self.animate_y(0, duration=2,delay=1)
+        '''
+        if key == "escape":
+            application.quit()
+
+    def update(self):
+        #fix 2 inputs by square-rooting speed, switch case?
+        self.x += held_keys['d'] * time.dt * 10
+        self.x -= held_keys['a'] * time.dt * 10
+        self.y += held_keys['w'] * time.dt * 10
+        self.y -= held_keys['s'] * time.dt * 10
+
+player = Player()
+box = Wall()
+
 app.run()

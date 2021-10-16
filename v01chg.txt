@@ -1,0 +1,12 @@
+Created new Player Class, inheriting from ursina's native Entity class.
+
+Added escape button function, which kills the app. Probably upgraded in future
+versions to a "Do you want to quit" pop-up.
+
+Translated movement system inside the Player Class. Probably moving the Class
+to a separated file in future versions.
+
+Created new Wall class, similar to Player base class.
+
+Further experimentation in collision handling required. Probably needing ray
+tracing or something like that to limit movement manually.
